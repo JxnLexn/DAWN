@@ -4,7 +4,11 @@
 #include <pthread.h>
 #include <stdint.h>
 #include <time.h>
-#include <limits.h>
+#include <limits.h> // Defines HOST_NAME_MAX
+
+#ifndef HOST_NAME_MAX
+#define HOST_NAME_MAX 255 // Define a fallback value if not defined
+#endif
 
 #include "ieee80211_utils.h"
 #include "mac_utils.h"
@@ -45,18 +49,27 @@ int get_band(int freq);
 
 // Band definitions
 // Keep them sorted by frequency, in ascending order
-enum dawn_bands {
-    DAWN_BAND_80211G,
-    DAWN_BAND_80211A,
+enum dawn_band {
+    DAWN_BAND_80211G,  // 2.4GHz
+    DAWN_BAND_80211A,  // 5GHz
+    DAWN_BAND_80211AX_6G,  // 6GHz neu hinzufügen
     __DAWN_BAND_MAX
 };
 
 // config section name
-extern const char *band_config_name[__DAWN_BAND_MAX];
+const char *band_config_name[__DAWN_BAND_MAX] = {
+    "802_11g",      // 2.4GHz
+    "802_11a",      // 5GHz
+    "802_11ax_6g"   // 6GHz neu hinzufügen
+};
 
 // starting frequency
 // TODO: make this configurable
-extern const int max_band_freq[__DAWN_BAND_MAX];
+const int max_band_freq[__DAWN_BAND_MAX] = {
+    3000,   // 2.4GHz Obergrenze
+    6000,   // 5GHz Obergrenze
+    7500    // 6GHz Obergrenze
+};
 
 // ---------------- Structs ----------------
 struct probe_metric_s {
