@@ -49,27 +49,19 @@ int get_band(int freq);
 
 // Band definitions
 // Keep them sorted by frequency, in ascending order
-enum dawn_band {
+enum dawn_band { // Name ggf. anpassen, falls du ihn geändert hattest
     DAWN_BAND_80211G,  // 2.4GHz
     DAWN_BAND_80211A,  // 5GHz
-    DAWN_BAND_80211AX_6G,  // 6GHz neu hinzufügen
-    __DAWN_BAND_MAX
+    DAWN_BAND_80211AX_6G,  // 6GHz neu hinzufügen <--- DIESER EINTRAG IST WICHTIG
+    __DAWN_BAND_MAX // Dieser Wert wird jetzt 3 sein
 };
 
 // config section name
-const char *band_config_name[__DAWN_BAND_MAX] = {
-    "802_11g",      // 2.4GHz
-    "802_11a",      // 5GHz
-    "802_11ax_6g"   // 6GHz neu hinzufügen
-};
+extern const char *band_config_name[__DAWN_BAND_MAX];
 
 // starting frequency
 // TODO: make this configurable
-const int max_band_freq[__DAWN_BAND_MAX] = {
-    3000,   // 2.4GHz Obergrenze
-    6000,   // 5GHz Obergrenze
-    7500    // 6GHz Obergrenze
-};
+extern const int max_band_freq[__DAWN_BAND_MAX];
 
 // ---------------- Structs ----------------
 struct probe_metric_s {
